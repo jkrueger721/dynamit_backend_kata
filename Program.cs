@@ -3,17 +3,20 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Text;
 
 class Program
 {
 
     static void Main(string[] args)
     {
-    
+        //Read text file and store in varible 
         var text = File.ReadAllText(@"Paragraph.txt");
-        var punctuation = text.Where(Char.IsPunctuation).Distinct().ToArray();
-        var words = text.Split().Select(x => x.Trim(punctuation)).ToArray();
-
+        var fixedtext = Regex.Replace(text, "[^a-zA-Z0-9% ]", string.Empty);
+        var words = fixedtext.Split(' ').ToArray();
+        //create dictionary with key value paring of string and int where the "word" is 
+        // the key and the "count" as the value 
           Dictionary<string, int> dictionary = new Dictionary<string, int>();
             foreach (string word in words)
             {
@@ -26,16 +29,20 @@ class Program
                     dictionary.Add(word,1);
                 }
             }
+        var items = from pair in dictionary
+                    orderby pair.Value descending
+                    select pair;
         // Test values of key pairing
-        Console.WriteLine();
-        foreach( KeyValuePair<string, int> kvp in dictionary )
+        foreach (KeyValuePair<string, int> pair in items)
         {
-            Console.WriteLine("Key = {0}, Value = {1}", 
-                kvp.Key, kvp.Value);
+            Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
         }
+       
+       
+        // Write to file to display output
         using (StreamWriter file = new StreamWriter("Output.txt"))
-        foreach (var entry in dictionary)
-        file.WriteLine("This word: {0}, Occurs {1} times", entry.Key, entry.Value); 
+        foreach (var entry in items)
+        file.WriteLine("This word: {0} , Occurs {1} times", entry.Key, entry.Value); 
         
     }
 }
