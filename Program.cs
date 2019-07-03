@@ -14,7 +14,8 @@ class Program
         //Read text file and store in varible 
         var text = File.ReadAllText(@"Paragraph.txt");
         var fixedtext = Regex.Replace(text, "[^a-zA-Z0-9% ]", string.Empty);
-        var words = fixedtext.Split(' ').ToArray();
+        var lower = fixedtext.ToLower();
+        var words = lower.Split(' ').ToArray();
         //create dictionary with key value paring of string and int where the "word" is 
         // the key and the "count" as the value 
           Dictionary<string, int> dictionary = new Dictionary<string, int>();
