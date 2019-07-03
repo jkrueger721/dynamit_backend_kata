@@ -19,9 +19,6 @@ class Program
         var words = lower.Split(' ').ToArray();
         //create dictionary with key value paring of string and int where the "word" is 
         // the key and the "count" as the value 
-        foreach(string w in words){
-            Console.WriteLine(w);
-        }
           Dictionary<string, int> dictionary = new Dictionary<string, int>();
             foreach (string word in words)
             {
