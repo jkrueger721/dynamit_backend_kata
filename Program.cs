@@ -1,10 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Text;
 
 class Program
 {
@@ -34,13 +31,6 @@ class Program
         var items = from pair in dictionary
                     orderby pair.Value descending
                     select pair;
-        // Test values of key pairing
-        // foreach (KeyValuePair<string, int> pair in items)
-        // {
-        //     Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
-        // }
-       
-       
         // Write to file to display output
         using (StreamWriter file = new StreamWriter("Output.txt"))
         foreach (var entry in items)
